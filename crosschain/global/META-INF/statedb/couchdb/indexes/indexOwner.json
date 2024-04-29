@@ -1,0 +1,7 @@
+{
+  "index":{
+      "fields":["hospitalID", "policyID"] 
+  },
+  "name":"indexglobal",
+  "type":"json"
+}

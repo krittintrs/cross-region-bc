@@ -17,11 +17,7 @@ type SmartContract struct {
 
 // GlobalAsset describes basic details of what makes up a simple asset
 type GlobalAsset struct {
-	PolicyID       string `json:"policyID"`
 	HospitalID     string `json:"hospitalID"`
-	ID             string `json:"ID"`
-	Owner          string `json:"owner"`
-	FileCount      int    `json:"fileCount"`
 	RegionalCCName string `json:"regionalCCName"`
 }
 
@@ -33,34 +29,16 @@ type RegionalAsset struct {
 	AppraisedValue int    `json:"appraisedValue"`
 }
 
-func generateGlobalAssets(numAssets int) []GlobalAsset {
-	var assets []GlobalAsset
-	for i := 1; i <= numAssets; i++ {
-		asset := GlobalAsset{
-			ID:             fmt.Sprintf("glob%d", i),
-			Owner:          "Dumb",
-			HospitalID:     "HP0", // Assuming a default value for HospitalID
-			PolicyID:       "PolicyID",
-			FileCount:      0,                   // Assuming a default value for FileCount
-			RegionalCCName: "anotherRegionalCC", // Assuming a default value for RegionalBCPath
-		}
-		if i%2 == 0 {
-			// for test
-			asset.Owner = "PATIENT!"
-			asset.HospitalID = "HP1"
-			asset.PolicyID = fmt.Sprintf("pc%d", i/2)
-			asset.RegionalCCName = "regionalCC"
-		}
-		assets = append(assets, asset)
-	}
-	fmt.Printf("Successfully generated %d records\n", numAssets)
-	return assets
-}
-
 // InitLedger adds a base set of assets to the ledger
-func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface, numRows int) error {
+func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface) error {
 
-	assets := generateGlobalAssets(numRows)
+	assets := []GlobalAsset{
+		{HospitalID: "HP1", RegionalCCName: "regionalCC1"},
+		{HospitalID: "HP2", RegionalCCName: "regionalCC2"},
+		{HospitalID: "HP3", RegionalCCName: "regionalCC3"},
+		{HospitalID: "HP4", RegionalCCName: "regionalCC4"},
+		{HospitalID: "HP5", RegionalCCName: "regionalCC5"},
+	}
 
 	for _, asset := range assets {
 		assetJSON, err := json.Marshal(asset)
@@ -69,7 +47,7 @@ func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface, 
 			return err
 		}
 
-		err = ctx.GetStub().PutState(asset.ID, assetJSON)
+		err = ctx.GetStub().PutState(asset.HospitalID, assetJSON)
 		if err != nil {
 			fmt.Printf("INIT: PUT STATE ERR!\n")
 			return fmt.Errorf("failed to put to world state. %v", err)
@@ -81,21 +59,17 @@ func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface, 
 }
 
 // CreateAsset issues a new asset to the world state with given details.
-func (s *SmartContract) CreateAsset(ctx contractapi.TransactionContextInterface, id string, owner string, hospitalID string, policyID string, fileCount int, rccName string) error {
-	exists, err := s.AssetExists(ctx, id)
+func (s *SmartContract) CreateAsset(ctx contractapi.TransactionContextInterface, hospitalID string, rccName string) error {
+	exists, err := s.AssetExists(ctx, hospitalID)
 	if err != nil {
 		return err
 	}
 	if exists {
-		return fmt.Errorf("the asset %s already exists", id)
+		return fmt.Errorf("the asset %s already exists", hospitalID)
 	}
 
 	asset := GlobalAsset{
-		ID:             id,
-		Owner:          owner,
 		HospitalID:     hospitalID,
-		PolicyID:       policyID,
-		FileCount:      fileCount,
 		RegionalCCName: rccName,
 	}
 	assetJSON, err := json.Marshal(asset)
@@ -103,7 +77,7 @@ func (s *SmartContract) CreateAsset(ctx contractapi.TransactionContextInterface,
 		return err
 	}
 
-	return ctx.GetStub().PutState(id, assetJSON)
+	return ctx.GetStub().PutState(hospitalID, assetJSON)
 }
 
 // ReadAsset returns the asset stored in the world state with given id.
@@ -138,10 +112,54 @@ func (s *SmartContract) ReadAsset(ctx contractapi.TransactionContextInterface, i
 	return &asset, nil
 }
 
+// ReadAsset returns the asset stored in the world state with given id.
+func (s *SmartContract) ReadRegionalAsset(ctx contractapi.TransactionContextInterface, policyID string, hospitalID string) (*RegionalAsset, error) {
+	startTime := time.Now()
+	indexAssetJSON, err := ctx.GetStub().GetState(hospitalID)
+	if err != nil {
+		duration := time.Since(startTime)
+		fmt.Printf("FAIL TO READ!! Time taken for query for hospitalID (%s): %s\n", hospitalID, duration)
+
+		return nil, fmt.Errorf("failed to read from world state: %v", err)
+	}
+	if indexAssetJSON == nil {
+		duration := time.Since(startTime)
+		fmt.Printf("NOT FOUND!! Time taken for query for hospitalID (%s): %s\n", hospitalID, duration)
+
+		return nil, fmt.Errorf("the asset hospitalID (%s) does not exist", hospitalID)
+	}
+
+	var indexAsset GlobalAsset
+	err = json.Unmarshal(indexAssetJSON, &indexAsset)
+	if err != nil {
+		duration := time.Since(startTime)
+		fmt.Printf("UNMARSHAL ERR!! Time taken for query for hospitalID (%s): %s\n", hospitalID, duration)
+
+		return nil, err
+	}
+	
+	duration := time.Since(startTime)
+	fmt.Printf("Time before retrieve regional: %s\n", duration)
+
+	asset, err := retrieveFromRegionalBC(ctx, indexAsset.RegionalCCName, policyID)
+	if err != nil {
+		duration := time.Since(startTime)
+		fmt.Printf("Regional ERR!! Time taken for query for hospitalID (%s): %s\n", hospitalID, duration)
+
+		return nil, err
+	}
+
+	duration = time.Since(startTime)
+	fmt.Printf("Time taken for query hospitalID (%s) policyID (%s): %s\n", hospitalID, policyID, duration)
+
+	return asset, nil
+}
+
+
 // retrieveFromRegionalBC retrieves asset data from the regional blockchain using the provided path and asset ID.
 func retrieveFromRegionalBC(ctx contractapi.TransactionContextInterface, rccName string, policyID string) (*RegionalAsset, error) {
 	queryArgs := [][]byte{[]byte("ReadAsset"), []byte(policyID)}
-	response := ctx.GetStub().InvokeChaincode(rccName, queryArgs, "mychannel")
+	response := ctx.GetStub().InvokeCh aincode(rccName, queryArgs, "mychannel")
 
 	if response.GetStatus() != shim.OK {
 		return nil, fmt.Errorf("failed to retrieve asset data from regional blockchain: %s", response.GetMessage())
@@ -158,22 +176,18 @@ func retrieveFromRegionalBC(ctx contractapi.TransactionContextInterface, rccName
 }
 
 // UpdateAsset updates an existing asset in the world state with provided parameters.
-func (s *SmartContract) UpdateAsset(ctx contractapi.TransactionContextInterface, id string, owner string, hospitalID string, policyID string, fileCount int, rccName string) error {
-	exists, err := s.AssetExists(ctx, id)
+func (s *SmartContract) UpdateAsset(ctx contractapi.TransactionContextInterface, hospitalID string, rccName string) error {
+	exists, err := s.AssetExists(ctx, hospitalID)
 	if err != nil {
 		return err
 	}
 	if !exists {
-		return fmt.Errorf("the asset %s does not exist", id)
+		return fmt.Errorf("the asset %s does not exist", hospitalID)
 	}
 
 	// overwriting original asset with new asset
 	asset := GlobalAsset{
-		ID:             id,
-		Owner:          owner,
 		HospitalID:     hospitalID,
-		PolicyID:       policyID,
-		FileCount:      fileCount,
 		RegionalCCName: rccName,
 	}
 	assetJSON, err := json.Marshal(asset)
@@ -181,7 +195,7 @@ func (s *SmartContract) UpdateAsset(ctx contractapi.TransactionContextInterface,
 		return err
 	}
 
-	return ctx.GetStub().PutState(id, assetJSON)
+	return ctx.GetStub().PutState(hospitalID, assetJSON)
 }
 
 // DeleteAsset deletes an given asset from the world state.
@@ -208,13 +222,13 @@ func (s *SmartContract) AssetExists(ctx contractapi.TransactionContextInterface,
 }
 
 // TransferAsset updates the owner field of asset with given id in world state.
-func (s *SmartContract) TransferAsset(ctx contractapi.TransactionContextInterface, id string, newOwner string) error {
+func (s *SmartContract) TransferAsset(ctx contractapi.TransactionContextInterface, id string, newrccName string) error {
 	asset, err := s.ReadAsset(ctx, id)
 	if err != nil {
 		return err
 	}
 
-	asset.Owner = newOwner
+	asset.RegionalCCName = newrccName
 	assetJSON, err := json.Marshal(asset)
 	if err != nil {
 		return err
@@ -259,8 +273,8 @@ func (t *SmartContract) QueryAssetsByPolicyAndHospital(ctx contractapi.Transacti
 		return nil, fmt.Errorf("query global failed: %s", err)
 	}
 
-	fmt.Printf("[GLO] GlobalID: %s, Owner: %s, PolicyID: %s, HospitalID: %s\n", globalAsset.ID, globalAsset.Owner, globalAsset.PolicyID, globalAsset.HospitalID)
-	actualAsset, err := retrieveFromRegionalBC(ctx, globalAsset.RegionalCCName, globalAsset.PolicyID)
+	fmt.Printf("[GLO] PolicyID: %s, HospitalID: %s, RegionalCC: %s\n", policyID, globalAsset.HospitalID, globalAsset.RegionalCCName)
+	actualAsset, err := retrieveFromRegionalBC(ctx, globalAsset.RegionalCCName, policyID)
 	if err != nil {
 		return nil, fmt.Errorf("query regional failed: %s", err)
 	}

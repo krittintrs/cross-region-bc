@@ -1,0 +1,53 @@
+[ INDEXER - 300000 data ]
+Executing command: peer chaincode query -C mychannel -n regionalCC1 -c '{"Args":["ReadAsset", "pc1"]}'
+{"ID":"pc1","color":"blue","size":5,"owner":"PATIENT 1","appraisedValue":1000}
+Total time taken: 186 milliseconds
+Executing command: peer chaincode query -C mychannel -n regionalCC1 -c '{"Args":["ReadAsset", "pc60000"]}'
+{"ID":"pc60000","color":"blue","size":5,"owner":"PATIENT 1","appraisedValue":1000}
+Total time taken: 52 milliseconds
+Executing command: peer chaincode query -C mychannel -n regionalCC1 -c '{"Args":["ReadAsset", "pc150000"]}'
+{"ID":"pc150000","color":"blue","size":5,"owner":"PATIENT 1","appraisedValue":1000}
+Total time taken: 54 milliseconds
+Executing command: peer chaincode query -C mychannel -n regionalCC1 -c '{"Args":["ReadAsset", "pc300000"]}'
+Error: endorsement failure during query. response: status:500 message:"the asset pc300000 does not exist" 
+
+Total time taken: 50 milliseconds
+Executing command: peer chaincode query -C mychannel -n regionalCC1 -c '{"Args":["ReadAsset", "pc450000"]}'
+Error: endorsement failure during query. response: status:500 message:"the asset pc450000 does not exist" 
+
+Total time taken: 44 milliseconds
+Executing command: peer chaincode query -C mychannel -n regionalCC2 -c '{"Args":["ReadAsset", "pc1"]}'
+{"ID":"pc1","color":"green","size":15,"owner":"PATIENT 2","appraisedValue":20000}
+Total time taken: 51 milliseconds
+Executing command: peer chaincode query -C mychannel -n regionalCC2 -c '{"Args":["ReadAsset", "pc60000"]}'
+{"ID":"pc60000","color":"green","size":15,"owner":"PATIENT 2","appraisedValue":20000}
+Total time taken: 59 milliseconds
+Executing command: peer chaincode query -C mychannel -n regionalCC2 -c '{"Args":["ReadAsset", "pc90000"]}'
+{"ID":"pc90000","color":"green","size":15,"owner":"PATIENT 2","appraisedValue":20000}
+Total time taken: 56 milliseconds
+Executing command: peer chaincode query -C mychannel -n regionalCC2 -c '{"Args":["ReadAsset", "pc180000"]}'
+Error: endorsement failure during query. response: status:500 message:"the asset pc180000 does not exist" 
+
+Total time taken: 52 milliseconds
+Executing command: peer chaincode query -C mychannel -n regionalCC2 -c '{"Args":["ReadAsset", "pc360000"]}'
+Error: endorsement failure during query. response: status:500 message:"the asset pc360000 does not exist" 
+
+Total time taken: 44 milliseconds
+Executing command: peer chaincode query -C mychannel -n regionalCC3 -c '{"Args":["ReadAsset", "pc1"]}'
+{"ID":"pc1","color":"yellow","size":300,"owner":"PATIENT RG 3","appraisedValue":30}
+Total time taken: 51 milliseconds
+Executing command: peer chaincode query -C mychannel -n regionalCC3 -c '{"Args":["ReadAsset", "pc60000"]}'
+{"ID":"pc60000","color":"yellow","size":300,"owner":"PATIENT RG 3","appraisedValue":30}
+Total time taken: 44 milliseconds
+Executing command: peer chaincode query -C mychannel -n regionalCC3 -c '{"Args":["ReadAsset", "pc120000"]}'
+Error: endorsement failure during query. response: status:500 message:"the asset pc120000 does not exist" 
+
+Total time taken: 54 milliseconds
+Executing command: peer chaincode query -C mychannel -n regionalCC3 -c '{"Args":["ReadAsset", "pc240000"]}'
+Error: endorsement failure during query. response: status:500 message:"the asset pc240000 does not exist" 
+
+Total time taken: 60 milliseconds
+Invalid hospitalID: HP9
+Total time taken: 4 milliseconds
+Invalid hospitalID: HP10
+Total time taken: 3 milliseconds

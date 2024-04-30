@@ -16,22 +16,22 @@ type SmartContract struct {
 }
 
 type RegionalAsset struct {
-	ID             string `json:"ID"`
-	Color          string `json:"color"`
-	Size           int    `json:"size"`
-	Owner          string `json:"owner"`
-	AppraisedValue int    `json:"appraisedValue"`
+	ID        string   `json:"ID"`
+	Owner     string   `json:"owner"`
+	AuthRoles []string `json:"authRoles"`
+	Grant     string   `json:"grant"`
+	Metadata  string   `json:"metadata"`
 }
 
 func generateRegionalAssets(numAssets int) []RegionalAsset {
 	var assets []RegionalAsset
 	for i := 1; i <= numAssets; i++ {
 		asset := RegionalAsset{
-			ID:             fmt.Sprintf("pc%d", i),
-			Color:          "green",     // Example color
-			Size:           15,          // Example size
-			Owner:          "PATIENT 2", // Example owner
-			AppraisedValue: 20000,       // Example appraised value
+			ID:        fmt.Sprintf("pc%d", i),
+			Owner:     "PATIENT 2",
+			AuthRoles: []string{"DoctorReg2"},
+			Grant:     "R",
+			Metadata:  "region2/internal/ehr.data",
 		}
 		assets = append(assets, asset)
 	}
@@ -63,7 +63,7 @@ func (s *SmartContract) InitLedger(ctx contractapi.TransactionContextInterface, 
 }
 
 // CreateAsset issues a new asset to the world state with given details.
-func (s *SmartContract) CreateAsset(ctx contractapi.TransactionContextInterface, id string, color string, size int, owner string, appraisedValue int) error {
+func (s *SmartContract) CreateAsset(ctx contractapi.TransactionContextInterface, id string, owner string, authRoles []string, grant string, metadata string) error {
 	exists, err := s.AssetExists(ctx, id)
 	if err != nil {
 		return err
@@ -73,11 +73,11 @@ func (s *SmartContract) CreateAsset(ctx contractapi.TransactionContextInterface,
 	}
 
 	asset := RegionalAsset{
-		ID:             id,
-		Color:          color,
-		Size:           size,
-		Owner:          owner,
-		AppraisedValue: appraisedValue,
+		ID:        id,
+		Owner:     owner,
+		AuthRoles: authRoles,
+		Grant:     grant,
+		Metadata:  metadata,
 	}
 
 	assetJSON, err := json.Marshal(asset)
@@ -121,7 +121,7 @@ func (s *SmartContract) ReadAsset(ctx contractapi.TransactionContextInterface, i
 }
 
 // UpdateAsset updates an existing asset in the world state with provided parameters.
-func (s *SmartContract) UpdateAsset(ctx contractapi.TransactionContextInterface, id string, color string, size int, owner string, appraisedValue int) error {
+func (s *SmartContract) UpdateAsset(ctx contractapi.TransactionContextInterface, id string, owner string, authRoles []string, grant string, metadata string) error {
 	exists, err := s.AssetExists(ctx, id)
 	if err != nil {
 		return err
@@ -132,12 +132,13 @@ func (s *SmartContract) UpdateAsset(ctx contractapi.TransactionContextInterface,
 
 	// overwriting original asset with new asset
 	asset := RegionalAsset{
-		ID:             id,
-		Color:          color,
-		Size:           size,
-		Owner:          owner,
-		AppraisedValue: appraisedValue,
+		ID:        id,
+		Owner:     owner,
+		AuthRoles: authRoles,
+		Grant:     grant,
+		Metadata:  metadata,
 	}
+	
 	assetJSON, err := json.Marshal(asset)
 	if err != nil {
 		return err

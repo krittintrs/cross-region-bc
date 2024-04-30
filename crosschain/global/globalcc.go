@@ -159,7 +159,7 @@ func (s *SmartContract) ReadRegionalAsset(ctx contractapi.TransactionContextInte
 // retrieveFromRegionalBC retrieves asset data from the regional blockchain using the provided path and asset ID.
 func retrieveFromRegionalBC(ctx contractapi.TransactionContextInterface, rccName string, policyID string) (*RegionalAsset, error) {
 	queryArgs := [][]byte{[]byte("ReadAsset"), []byte(policyID)}
-	response := ctx.GetStub().InvokeCh aincode(rccName, queryArgs, "mychannel")
+	response := ctx.GetStub().InvokeChaincode(rccName, queryArgs, "mychannel")
 
 	if response.GetStatus() != shim.OK {
 		return nil, fmt.Errorf("failed to retrieve asset data from regional blockchain: %s", response.GetMessage())

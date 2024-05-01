@@ -31,8 +31,13 @@ func generateRegionalAssets(numAssets int) []RegionalAsset {
 			Owner:     "PATIENT 1",
 			AuthRoles: []string{"DoctorReg1"},
 			Grant:     "R",
-			Metadata:  "region1/ehr.data",
+			Metadata:  "https://www.youtube.com",
 		}
+
+		if (10 < i) && (i < 19) {
+			asset.Metadata = "https://storage.cloud.google.com/hospital-a/data.json"	
+		}
+
 		assets = append(assets, asset)
 	}
 	fmt.Printf("Successfully generated %d records\n", numAssets)

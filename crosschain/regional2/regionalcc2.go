@@ -31,7 +31,7 @@ func generateRegionalAssets(numAssets int) []RegionalAsset {
 			Owner:     "PATIENT 2",
 			AuthRoles: []string{"DoctorReg2"},
 			Grant:     "R",
-			Metadata:  "region2/internal/ehr.data",
+			Metadata:  "https://www.siit.tu.ac.th",
 		}
 		assets = append(assets, asset)
 	}

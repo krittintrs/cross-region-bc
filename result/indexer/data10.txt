@@ -1,0 +1,17 @@
+index	isFound	time
+1	true	75818
+2	true	72887
+5	true	67563
+10	false	67002
+15	false	66449
+1	true	67384
+2	true	67304
+3	true	66506
+6	false	65146
+12	false	66618
+1	true	72771
+2	true	66914
+4	false	66217
+8	false	66876
+1	invalid	3849
+10	invalid	3590

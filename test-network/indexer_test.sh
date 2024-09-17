@@ -2,7 +2,7 @@
 
 data=$1
 
-echo "[ INDEXER - $data data ]"
+echo -e "index\tisFound\ttime"
 
 # regionalCC1
 ./indexer_execute.sh HP1 1

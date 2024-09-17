@@ -1,0 +1,15 @@
+index	isFound	time
+1	true	49596
+2	true	44134
+5	true	42955
+7	true	53753
+10	true	48057
+1	true	62852
+2	true	45041
+5	true	45346
+7	true	45443
+10	true	45805
+12	false	45341
+15	false	41134
+18	false	45201
+20	false	46146

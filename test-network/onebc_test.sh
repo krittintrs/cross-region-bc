@@ -2,7 +2,7 @@
 
 data=$1
 
-echo "[ ONE BC - $data data ]"
+echo -e "index\tisFound\ttime"
 
 ./onebc_execute.sh 1
 ./onebc_execute.sh $(($data/10*2))

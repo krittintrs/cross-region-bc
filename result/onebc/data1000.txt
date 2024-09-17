@@ -1,0 +1,15 @@
+index	isFound	time
+1	true	64317
+200	true	46437
+500	true	44050
+700	true	45152
+1000	true	44373
+1	true	43163
+200	true	44309
+500	true	45366
+700	true	46285
+1000	true	46644
+1200	false	46037
+1500	false	46502
+1800	false	46573
+2000	false	45998

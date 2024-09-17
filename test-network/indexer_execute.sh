@@ -17,16 +17,16 @@ chaincodeName=$(awk -F',' -v id="$hospitalID" '$1==id {print $2}' hospital_chain
 
 # Check if the hospitalID is valid
 if [ -z "$chaincodeName" ]; then
-    echo "Invalid hospitalID: $hospitalID"
+    # echo "Invalid hospitalID: $hospitalID"
     
     # Capture the end time in nanoseconds
     endTime=$(gdate +%s%N)
 
     # Calculate the time difference in milliseconds
-    duration=$(( ($endTime - $startTime)/1000000 ))
+    duration=$(( ($endTime - $startTime)/1000 ))
 
     # Print the total time taken
-    echo "Total time taken: $duration milliseconds" 
+    echo -e "$policyID\tinvalid\t$duration"
     
     exit 1
 fi
@@ -35,17 +35,20 @@ fi
 queryCommand="peer chaincode query -C mychannel -n $chaincodeName -c '{\"Args\":[\"ReadAsset\", \"pc$policyID\"]}'"
 
 # Execute the query command
-echo "Executing command: $queryCommand"
-response=$(eval $queryCommand)
+response=$(eval $queryCommand 2>&1)  # Capture both stdout and stderr
 
 # Capture the end time in nanoseconds
 endTime=$(gdate +%s%N)
 
 # Calculate the time difference in milliseconds
-duration=$(( ($endTime - $startTime)/1000000 ))
+duration=$(( ($endTime - $startTime)/1000 ))
 
-# Print the response
-echo "$response"
+# Check if the response contains an error message
+if echo "$response" | grep -q "Error" || [ -z "$response" ]; then
+    status="false"
+else
+    status="true"
+fi
 
-# Print the total time taken
-echo "Total time taken: $duration milliseconds"
+# Print the result in tab-separated format
+echo -e "$policyID\t$status\t$duration"

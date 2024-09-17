@@ -1,0 +1,17 @@
+index	isFound	time
+1	true	94549
+20	true	70248
+50	true	76442
+100	false	71380
+150	false	71363
+1	true	76774
+20	true	71532
+30	true	69368
+60	false	65713
+120	false	65636
+1	true	71465
+20	true	189998
+40	false	70340
+80	false	66567
+1	invalid	3851
+100	invalid	3649

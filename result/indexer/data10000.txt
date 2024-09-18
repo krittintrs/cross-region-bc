@@ -1,0 +1,17 @@
+index	isFound	time
+1	true	34679
+2000	true	35247
+5000	true	35201
+10000	false	35870
+15000	false	35383
+1	true	35974
+2000	true	35810
+3000	true	35500
+6000	false	35181
+12000	false	35517
+1	true	35868
+2000	true	35344
+4000	false	35780
+8000	false	35240
+1	invalid	1339
+10000	invalid	1272

@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
+	"sync"
 
 	"github.com/hyperledger/fabric-contract-api-go/contractapi"
 )
@@ -123,6 +124,79 @@ func (s *SmartContract) ReadAsset(ctx contractapi.TransactionContextInterface, i
 	fmt.Printf("Time taken for query for id (%s): %s\n", id, duration)
 
 	return &asset, nil
+}
+
+// ReadMultipleAssets reads multiple assets from the world state concurrently with limited concurrency
+func (s *SmartContract) ReadMultipleAssets(ctx contractapi.TransactionContextInterface, idList string) ([]*RegionalAsset, error) {
+    var ids []string
+    err := json.Unmarshal([]byte(idList), &ids)
+    if err != nil {
+        return nil, fmt.Errorf("failed to unmarshal asset ID list: %v", err)
+    }
+
+    const maxConcurrentQueries = 2  // Adjust based on the environment
+    semaphore := make(chan struct{}, maxConcurrentQueries)
+
+    var wg sync.WaitGroup
+    resultChannel := make(chan *RegionalAsset, len(ids))
+    errorChannel := make(chan error, len(ids))
+
+    for _, id := range ids {
+        wg.Add(1)
+        go func(assetID string) {
+            defer wg.Done()
+
+            // Block until we acquire a semaphore slot
+            semaphore <- struct{}{}
+            defer func() { <-semaphore }()  // Release the slot when done
+
+            startTime := time.Now()
+            assetJSON, err := ctx.GetStub().GetState(assetID)
+            if err != nil {
+                duration := time.Since(startTime)
+                fmt.Printf("FAIL TO READ!! Time taken for query for id (%s): %s\n", assetID, duration)
+                errorChannel <- fmt.Errorf("failed to read from world state: %v", err)
+                return
+            }
+
+            if assetJSON == nil {
+                duration := time.Since(startTime)
+                fmt.Printf("NOT FOUND!! Time taken for query for id (%s): %s\n", assetID, duration)
+                errorChannel <- fmt.Errorf("the asset %s does not exist", assetID)
+                return
+            }
+
+            var asset RegionalAsset
+            err = json.Unmarshal(assetJSON, &asset)
+            if err != nil {
+                duration := time.Since(startTime)
+                fmt.Printf("UNMARSHAL ERR!! Time taken for query for id (%s): %s\n", assetID, duration)
+                errorChannel <- fmt.Errorf("failed to unmarshal asset: %v", err)
+                return
+            }
+
+            duration := time.Since(startTime)
+            fmt.Printf("Time taken for query for id (%s): %s\n", assetID, duration)
+            resultChannel <- &asset
+        }(id)
+    }
+
+    wg.Wait()
+    close(resultChannel)
+    close(errorChannel)
+
+    var assets []*RegionalAsset
+    for asset := range resultChannel {
+        assets = append(assets, asset)
+    }
+
+    select {
+    case err := <-errorChannel:
+        return nil, err
+    default:
+    }
+
+    return assets, nil
 }
 
 // UpdateAsset updates an existing asset in the world state with provided parameters.

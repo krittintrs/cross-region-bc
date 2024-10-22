@@ -1,15 +1,43 @@
-index	isFound	time
-1	true	33995
-200	true	34660
-500	true	34235
-700	true	34837
-1000	true	34890
-1	true	34578
-200	true	34560
-500	true	35002
-700	true	35082
-1000	true	34763
-1200	false	34715
-1500	false	34348
-1800	false	34160
-2000	false	34955
+peer0.org1.example.com|2024-09-21 14:02:40.347 UTC 0104 INFO [comm.grpc.server] 1 -> streaming call completed grpc.service=gossip.Gossip grpc.method=GossipStream grpc.request_deadline=2024-09-21T14:02:48.347Z grpc.peer_address=172.18.0.6:42986 grpc.peer_subject="CN=peer0,OU=peer,O=Hyperledger,ST=North Carolina,C=US" error="timed out waiting for connection message from 172.18.0.6:42986" grpc.code=Unknown grpc.call_duration=2.000172552s
+dev-peer0.org1.example.com-regionalCC1_1.0.1-0c4cf4f99dbe3a725c4fbae4791d90346892b381cea8958e541e47e9b449b14a|Time taken for query for id (pc1): 195.424µs
+                                                                                       peer0.org1.example.com|2024-09-21 14:02:41.794 UTC 0105 INFO [endorser] callChaincode -> finished chaincode: regionalCC1 duration: 0ms channel=mychannel txID=4beeb1b8
+                                                                                       peer0.org1.example.com|2024-09-21 14:02:41.794 UTC 0106 INFO [comm.grpc.server] 1 -> unary call completed grpc.service=protos.Endorser grpc.method=ProcessProposal grpc.peer_address=172.18.0.1:50208 grpc.code=OK grpc.call_duration=1.084863ms
+dev-peer0.org1.example.com-regionalCC1_1.0.1-0c4cf4f99dbe3a725c4fbae4791d90346892b381cea8958e541e47e9b449b14a|Time taken for query for id (pc200): 157.528µs
+                                                                                       peer0.org1.example.com|2024-09-21 14:02:41.830 UTC 0107 INFO [endorser] callChaincode -> finished chaincode: regionalCC1 duration: 0ms channel=mychannel txID=866f0411
+                                                                                       peer0.org1.example.com|2024-09-21 14:02:41.830 UTC 0108 INFO [comm.grpc.server] 1 -> unary call completed grpc.service=protos.Endorser grpc.method=ProcessProposal grpc.peer_address=172.18.0.1:50222 grpc.code=OK grpc.call_duration=1.016227ms
+dev-peer0.org1.example.com-regionalCC1_1.0.1-0c4cf4f99dbe3a725c4fbae4791d90346892b381cea8958e541e47e9b449b14a|Time taken for query for id (pc500): 148.747µs
+                                                                                       peer0.org1.example.com|2024-09-21 14:02:41.867 UTC 0109 INFO [endorser] callChaincode -> finished chaincode: regionalCC1 duration: 0ms channel=mychannel txID=91c05750
+                                                                                       peer0.org1.example.com|2024-09-21 14:02:41.868 UTC 010a INFO [comm.grpc.server] 1 -> unary call completed grpc.service=protos.Endorser grpc.method=ProcessProposal grpc.peer_address=172.18.0.1:50230 grpc.code=OK grpc.call_duration=998.919µs
+dev-peer0.org1.example.com-regionalCC1_1.0.1-0c4cf4f99dbe3a725c4fbae4791d90346892b381cea8958e541e47e9b449b14a|Time taken for query for id (pc700): 147.308µs
+                                                                                       peer0.org1.example.com|2024-09-21 14:02:41.905 UTC 010b INFO [endorser] callChaincode -> finished chaincode: regionalCC1 duration: 0ms channel=mychannel txID=6bffc77a
+                                                                                       peer0.org1.example.com|2024-09-21 14:02:41.905 UTC 010c INFO [comm.grpc.server] 1 -> unary call completed grpc.service=protos.Endorser grpc.method=ProcessProposal grpc.peer_address=172.18.0.1:50246 grpc.code=OK grpc.call_duration=963.517µs
+dev-peer0.org1.example.com-regionalCC1_1.0.1-0c4cf4f99dbe3a725c4fbae4791d90346892b381cea8958e541e47e9b449b14a|Time taken for query for id (pc1000): 278.827µs
+                                                                                       peer0.org1.example.com|2024-09-21 14:02:41.942 UTC 010d INFO [endorser] callChaincode -> finished chaincode: regionalCC1 duration: 0ms channel=mychannel txID=0f96814b
+                                                                                       peer0.org1.example.com|2024-09-21 14:02:41.942 UTC 010e INFO [comm.grpc.server] 1 -> unary call completed grpc.service=protos.Endorser grpc.method=ProcessProposal grpc.peer_address=172.18.0.1:50274 grpc.code=OK grpc.call_duration=1.346108ms
+dev-peer0.org1.example.com-regionalCC1_1.0.1-0c4cf4f99dbe3a725c4fbae4791d90346892b381cea8958e541e47e9b449b14a|Time taken for query for id (pc1): 142.215µs
+                                                                                       peer0.org1.example.com|2024-09-21 14:02:41.979 UTC 010f INFO [endorser] callChaincode -> finished chaincode: regionalCC1 duration: 0ms channel=mychannel txID=810a1ff0
+                                                                                       peer0.org1.example.com|2024-09-21 14:02:41.979 UTC 0110 INFO [comm.grpc.server] 1 -> unary call completed grpc.service=protos.Endorser grpc.method=ProcessProposal grpc.peer_address=172.18.0.1:50288 grpc.code=OK grpc.call_duration=1.025032ms
+dev-peer0.org1.example.com-regionalCC1_1.0.1-0c4cf4f99dbe3a725c4fbae4791d90346892b381cea8958e541e47e9b449b14a|Time taken for query for id (pc200): 131.618µs
+                                                                                       peer0.org1.example.com|2024-09-21 14:02:42.016 UTC 0111 INFO [endorser] callChaincode -> finished chaincode: regionalCC1 duration: 0ms channel=mychannel txID=64e0f03b
+                                                                                       peer0.org1.example.com|2024-09-21 14:02:42.016 UTC 0112 INFO [comm.grpc.server] 1 -> unary call completed grpc.service=protos.Endorser grpc.method=ProcessProposal grpc.peer_address=172.18.0.1:50314 grpc.code=OK grpc.call_duration=1.003841ms
+dev-peer0.org1.example.com-regionalCC1_1.0.1-0c4cf4f99dbe3a725c4fbae4791d90346892b381cea8958e541e47e9b449b14a|Time taken for query for id (pc500): 129.09µs
+                                                                                       peer0.org1.example.com|2024-09-21 14:02:42.054 UTC 0113 INFO [endorser] callChaincode -> finished chaincode: regionalCC1 duration: 0ms channel=mychannel txID=d0b88ef8
+                                                                                       peer0.org1.example.com|2024-09-21 14:02:42.054 UTC 0114 INFO [comm.grpc.server] 1 -> unary call completed grpc.service=protos.Endorser grpc.method=ProcessProposal grpc.peer_address=172.18.0.1:50326 grpc.code=OK grpc.call_duration=1.058554ms
+dev-peer0.org1.example.com-regionalCC1_1.0.1-0c4cf4f99dbe3a725c4fbae4791d90346892b381cea8958e541e47e9b449b14a|Time taken for query for id (pc700): 136.652µs
+                                                                                       peer0.org1.example.com|2024-09-21 14:02:42.091 UTC 0115 INFO [endorser] callChaincode -> finished chaincode: regionalCC1 duration: 0ms channel=mychannel txID=b232e119
+                                                                                       peer0.org1.example.com|2024-09-21 14:02:42.091 UTC 0116 INFO [comm.grpc.server] 1 -> unary call completed grpc.service=protos.Endorser grpc.method=ProcessProposal grpc.peer_address=172.18.0.1:50346 grpc.code=OK grpc.call_duration=1.00992ms
+dev-peer0.org1.example.com-regionalCC1_1.0.1-0c4cf4f99dbe3a725c4fbae4791d90346892b381cea8958e541e47e9b449b14a|Time taken for query for id (pc1000): 142.352µs
+                                                                                       peer0.org1.example.com|2024-09-21 14:02:42.127 UTC 0117 INFO [endorser] callChaincode -> finished chaincode: regionalCC1 duration: 0ms channel=mychannel txID=bd6a3fb9
+                                                                                       peer0.org1.example.com|2024-09-21 14:02:42.128 UTC 0118 INFO [comm.grpc.server] 1 -> unary call completed grpc.service=protos.Endorser grpc.method=ProcessProposal grpc.peer_address=172.18.0.1:50366 grpc.code=OK grpc.call_duration=1.014875ms
+dev-peer0.org1.example.com-regionalCC1_1.0.1-0c4cf4f99dbe3a725c4fbae4791d90346892b381cea8958e541e47e9b449b14a|NOT FOUND!! Time taken for query for id (pc1200): 128.237µs
+                                                                                       peer0.org1.example.com|2024-09-21 14:02:42.164 UTC 0119 INFO [endorser] callChaincode -> finished chaincode: regionalCC1 duration: 0ms channel=mychannel txID=e2c17859
+                                                                                       peer0.org1.example.com|2024-09-21 14:02:42.164 UTC 011a INFO [comm.grpc.server] 1 -> unary call completed grpc.service=protos.Endorser grpc.method=ProcessProposal grpc.peer_address=172.18.0.1:50384 grpc.code=OK grpc.call_duration=913.368µs
+dev-peer0.org1.example.com-regionalCC1_1.0.1-0c4cf4f99dbe3a725c4fbae4791d90346892b381cea8958e541e47e9b449b14a|NOT FOUND!! Time taken for query for id (pc1500): 146.654µs
+                                                                                       peer0.org1.example.com|2024-09-21 14:02:42.202 UTC 011b INFO [endorser] callChaincode -> finished chaincode: regionalCC1 duration: 0ms channel=mychannel txID=eedde46e
+                                                                                       peer0.org1.example.com|2024-09-21 14:02:42.202 UTC 011c INFO [comm.grpc.server] 1 -> unary call completed grpc.service=protos.Endorser grpc.method=ProcessProposal grpc.peer_address=172.18.0.1:50404 grpc.code=OK grpc.call_duration=924.629µs
+dev-peer0.org1.example.com-regionalCC1_1.0.1-0c4cf4f99dbe3a725c4fbae4791d90346892b381cea8958e541e47e9b449b14a|NOT FOUND!! Time taken for query for id (pc1800): 137.267µs
+                                                                                       peer0.org1.example.com|2024-09-21 14:02:42.238 UTC 011d INFO [endorser] callChaincode -> finished chaincode: regionalCC1 duration: 0ms channel=mychannel txID=a59d9079
+                                                                                       peer0.org1.example.com|2024-09-21 14:02:42.238 UTC 011e INFO [comm.grpc.server] 1 -> unary call completed grpc.service=protos.Endorser grpc.method=ProcessProposal grpc.peer_address=172.18.0.1:50430 grpc.code=OK grpc.call_duration=904.775µs
+dev-peer0.org1.example.com-regionalCC1_1.0.1-0c4cf4f99dbe3a725c4fbae4791d90346892b381cea8958e541e47e9b449b14a|NOT FOUND!! Time taken for query for id (pc2000): 128.63µs
+                                                                                       peer0.org1.example.com|2024-09-21 14:02:42.275 UTC 011f INFO [endorser] callChaincode -> finished chaincode: regionalCC1 duration: 0ms channel=mychannel txID=e955cad6
+                                                                                       peer0.org1.example.com|2024-09-21 14:02:42.275 UTC 0120 INFO [comm.grpc.server] 1 -> unary call completed grpc.service=protos.Endorser grpc.method=ProcessProposal grpc.peer_address=172.18.0.1:50442 grpc.code=OK grpc.call_duration=897.373µs

@@ -1,0 +1,38 @@
+--- Testing 10000 queries ---
+Single Blockchain - Run 1 >>> Query Times: 1.7096 minutes
+Single Blockchain - Run 2 >>> Query Times: 1.7225 minutes
+Single Blockchain - Run 3 >>> Query Times: 1.7272 minutes
+Single Blockchain - Run 4 >>> Query Times: 1.7300 minutes
+Single Blockchain - Run 5 >>> Query Times: 1.7248 minutes
+Average time for 10000 queries in single blockchain: 1.7228 minutes
+
+--- Testing 50000 queries ---
+Single Blockchain - Run 1 >>> Query Times: 8.9741 minutes
+Single Blockchain - Run 2 >>> Query Times: 9.4725 minutes
+Single Blockchain - Run 3 >>> Query Times: 9.4920 minutes
+Single Blockchain - Run 4 >>> Query Times: 9.4951 minutes
+Single Blockchain - Run 5 >>> Query Times: 9.4860 minutes
+Average time for 50000 queries in single blockchain: 9.3839 minutes
+
+--- Testing 100000 queries ---
+Single Blockchain - Run 1 >>> Query Times: 19.0900 minutes
+Single Blockchain - Run 2 >>> Query Times: 21.0316 minutes
+Single Blockchain - Run 3 >>> Query Times: 21.1565 minutes
+Single Blockchain - Run 4 >>> Query Times: 21.1892 minutes
+Single Blockchain - Run 5 >>> Query Times: 21.2265 minutes
+Average time for 100000 queries in single blockchain: 20.7387 minutes
+
+--- Testing 150000 queries ---
+Single Blockchain - Run 1 >>> Query Times: 30.4070 minutes
+Single Blockchain - Run 2 >>> Query Times: 37.7264 minutes
+Single Blockchain - Run 3 >>> Query Times: 38.4035 minutes
+Single Blockchain - Run 4 >>> Query Times: 38.4858 minutes
+Single Blockchain - Run 5 >>> Query Times: 36.9974 minutes
+Average time for 150000 queries in single blockchain: 36.4040 minutes
+
+--- Testing 200000 queries ---
+Single Blockchain - Run 1 >>> Query Times: 43.3253 minutes
+Single Blockchain - Run 2 >>> Query Times: 43.8001 minutes
+Single Blockchain - Run 3 >>> Query Times: 43.6675 minutes
+Single Blockchain - Run 4 >>> Query Times: 43.5443 minutes
+Single Blockchain - Run 5 >>> Query Times: 43.3516 minutes
